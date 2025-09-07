@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração - Comunidade Internacional Plenitude</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-section {
+            display: none;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form, .admin-section {
+            text-align: center;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .login-message {
+            margin-top: 15px;
+            color: red;
+        }
+
+        #admin-section h2 {
+            margin-bottom: 20px;
+        }
+
+        #admin-section #logout-button {
+            float: right;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+        
+        #posts-manager h3 {
+            margin-top: 20px;
+        }
+        
+        #create-post-form {
+            text-align: left;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        #create-post-form input, #create-post-form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #posts-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        #posts-list li {
+            background: #f9f9f9;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-status {
+            font-size: 0.8em;
+            color: #555;
+            margin-left: 10px;
+        }
+        
+        #posts-list li button {
+            margin-left: 10px;
+        }
+
+        .post-status {
+            font-size: 0.8em;
+            color: #555;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="color: #fff; text-decoration: none;">Comunidade Internacional Plenitude</a></h1>
+        </div>
+    </header>
+
+    <main>
+        <div id="login-section">
+            <div class="login-form">
+                <h2>Acesso de Administrador</h2>
+                <form id="login-form">
+                    <input type="email" id="email" placeholder="E-mail" required>
+                    <input type="password" id="password" placeholder="Senha" required>
+                    <button type="submit">Entrar</button>
+                    <p id="login-message" class="login-message"></p>
+                </form>
+            </div>
+        </div>
+
+        <div id="admin-section" class="admin-section">
+            <button id="logout-button">Sair</button>
+            <h2>Painel de Administração</h2>
+            
+            <div id="posts-manager">
+                <h3>Gerir Posts do Blog</h3>
+                <button id="show-create-post-form">Novo Post</button>
+                <div id="create-post-form" style="display:none;">
+                    <h4>Criar/Editar Post</h4>
+                    <form id="post-form">
+                        <input type="hidden" id="post-id">
+                        <label for="post-title">Título:</label>
+                        <input type="text" id="post-title" required>
+
+                        <label for="post-summary">Resumo:</label>
+                        <textarea id="post-summary" rows="3" required></textarea>
+
+                        <label for="post-content">Conteúdo (HTML):</label>
+                        <textarea id="post-content" rows="10" required></textarea>
+                        
+                        <label for="post-image">URL da Imagem:</label>
+                        <input type="text" id="post-image" placeholder="Ex: https://via.placeholder.com/600x400.png">
+                        
+                        <label>
+                            <input type="checkbox" id="post-published"> Publicar
+                        </label>
+
+                        <button type="submit" id="save-post-button">Salvar Post</button>
+                        <button type="button" id="cancel-post-button">Cancelar</button>
+                    </form>
+                </div>
+                
+                <div id="posts-list-container">
+                    <h4>Posts Existentes</h4>
+                    <ul id="posts-list">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Use a URL e a chave pública do seu projeto Supabase
+        const SUPABASE_URL = 'https://ksgmhimjuulnveszzvlj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzZ21oaW1qdXVsbnZlc3p6dmxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNTU1MjEsImV4cCI6MjA3MjgzMTUyMX0.L19M_5XA9TDHXDESI2VNxBevFqWsNrNJevS5oquYkO0';
+        
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const loginForm = document.getElementById('login-form');
+        const logoutButton = document.getElementById('logout-button');
+        const loginSection = document.getElementById('login-section');
+        const adminSection = document.getElementById('admin-section');
+        const loginMessage = document.getElementById('login-message');
+
+        const postsManager = document.getElementById('posts-manager');
+        const showCreatePostButton = document.getElementById('show-create-post-form');
+        const createPostFormDiv = document.getElementById('create-post-form');
+        const postForm = document.getElementById('post-form');
+        const postsList = document.getElementById('posts-list');
+        const savePostButton = document.getElementById('save-post-button');
+        const cancelPostButton = document.getElementById('cancel-post-button');
+
+        // Função para verificar se o utilizador é admin
+        async function isAdmin(userId) {
+            const { data, error } = await client
+                .from('profiles')
+                .select('role')
+                .eq('id', userId)
+                .single();
+            if (error || !data || data.role !== 'admin') {
+                return false;
+            }
+            return true;
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            loginMessage.textContent = '';
+
+            const { data, error } = await client.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                loginMessage.textContent = 'Erro ao fazer login. Verifique seu e-mail e senha.';
+                console.error('Erro de login:', error);
+            } else {
+                const isAdminUser = await isAdmin(data.user.id);
+                if (isAdminUser) {
+                    loginMessage.textContent = 'Login bem-sucedido!';
+                    checkSession();
+                } else {
+                    loginMessage.textContent = 'Acesso restrito apenas para administradores.';
+                    await client.auth.signOut();
+                }
+            }
+        }
+
+        async function handleLogout() {
+            const { error } = await client.auth.signOut();
+            if (error) {
+                console.error('Erro ao sair:', error);
+            } else {
+                checkSession();
+            }
+        }
+        
+        async function checkSession() {
+            const { data: { session } } = await client.auth.getSession();
+            if (session && session.user) {
+                const isAdminUser = await isAdmin(session.user.id);
+                if (isAdminUser) {
+                    loginSection.style.display = 'none';
+                    adminSection.style.display = 'block';
+                    loadPosts();
+                    console.log('Usuário logado:', session.user);
+                } else {
+                    loginSection.style.display = 'block';
+                    adminSection.style.display = 'none';
+                    console.log('Usuário não é admin.');
+                }
+            } else {
+                loginSection.style.display = 'block';
+                adminSection.style.display = 'none';
+                console.log('Nenhum usuário logado.');
+            }
+        }
+
+        // Funções para gerir a interface do formulário
+        showCreatePostButton.addEventListener('click', () => {
+            createPostFormDiv.style.display = 'block';
+            showCreatePostButton.style.display = 'none';
+            postForm.reset();
+            savePostButton.textContent = 'Salvar Post';
+            document.getElementById('post-id').value = '';
+        });
+
+        cancelPostButton.addEventListener('click', () => {
+            createPostFormDiv.style.display = 'none';
+            showCreatePostButton.style.display = 'block';
+            postForm.reset();
+            document.getElementById('post-id').value = '';
+        });
+
+        // Função para carregar e exibir os posts
+        async function loadPosts() {
+            const { data: posts, error } = await client
+                .from('posts')
+                .select('id, title, is_published, created_at');
+            
+            if (error) {
+                console.error('Erro ao carregar posts:', error);
+                return;
+            }
+
+            postsList.innerHTML = '';
+            posts.forEach(post => {
+                const listItem = document.createElement('li');
+                const status = post.is_published ? ' (Publicado)' : ' (Rascunho)';
+                const date = new Date(post.created_at).toLocaleDateString('pt-BR');
+                listItem.innerHTML = `
+                    ${post.title} <span class="post-status">${status}</span>
+                    <br><small>Criado em: ${date}</small>
+                    <div>
+                        <button class="edit-post-btn" data-id="${post.id}">Editar</button>
+                        <button class="delete-post-btn" data-id="${post.id}">Apagar</button>
+                    </div>
+                `;
+                postsList.appendChild(listItem);
+            });
+
+            postsList.querySelectorAll('.edit-post-btn').forEach(button => {
+                button.addEventListener('click', editPost);
+            });
+            postsList.querySelectorAll('.delete-post-btn').forEach(button => {
+                button.addEventListener('click', deletePost);
+            });
+        }
+
+        // Função para salvar ou atualizar um post
+        postForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const postId = document.getElementById('post-id').value;
+            const postData = {
+                title: document.getElementById('post-title').value,
+                summary: document.getElementById('post-summary').value,
+                content: document.getElementById('post-content').value,
+                image_url: document.getElementById('post-image').value,
+                is_published: document.getElementById('post-published').checked,
+                author_id: (await client.auth.getSession()).data.session.user.id
+            };
+
+            if (postId) {
+                const { error } = await client
+                    .from('posts')
+                    .update(postData)
+                    .eq('id', postId);
+                if (error) {
+                    console.error('Erro ao atualizar post:', error);
+                }
+            } else {
+                const { error } = await client
+                    .from('posts')
+                    .insert([postData]);
+                if (error) {
+                    console.error('Erro ao criar post:', error);
+                }
+            }
+            createPostFormDiv.style.display = 'none';
+            showCreatePostButton.style.display = 'block';
+            loadPosts();
+        });
+
+        // Função para carregar dados de um post para edição
+        async function editPost(event) {
+            const postId = event.target.dataset.id;
+            const { data: post, error } = await client
+                .from('posts')
+                .select('*')
+                .eq('id', postId)
+                .single();
+
+            if (error) {
+                console.error('Erro ao carregar post para edição:', error);
+                return;
+            }
+
+            document.getElementById('post-id').value = post.id;
+            document.getElementById('post-title').value = post.title;
+            document.getElementById('post-summary').value = post.summary;
+            document.getElementById('post-content').value = post.content;
+            document.getElementById('post-image').value = post.image_url;
+            document.getElementById('post-published').checked = post.is_published;
+
+            createPostFormDiv.style.display = 'block';
+            showCreatePostButton.style.display = 'none';
+            savePostButton.textContent = 'Atualizar Post';
+        }
+
+        // Função para apagar um post
+        async function deletePost(event) {
+            const postId = event.target.dataset.id;
+            if (confirm('Tem certeza que deseja apagar este post?')) {
+                const { error } = await client
+                    .from('posts')
+                    .delete()
+                    .eq('id', postId);
+                if (error) {
+                    console.error('Erro ao apagar post:', error);
+                } else {
+                    loadPosts();
+                }
+            }
+        }
+
+        // Verifica o estado da sessão ao carregar a página
+        checkSession();
+    </script>
+</body>
+</html>

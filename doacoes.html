@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doações - Comunidade Internacional Plenitude</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="color: #fff; text-decoration: none;">Comunidade Internacional Plenitude</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="index.html#sobre">Sobre Nós</a></li>
+                    <li><a href="index.html#eventos">Eventos</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="doacoes.html">Doações</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section-padded">
+        <div class="container">
+            <h2>Sua Contribuição Faz a Diferença</h2>
+            <p class="intro-text">
+                As suas doações são fundamentais para que possamos continuar a nossa missão de espalhar a palavra, apoiar a comunidade e manter as nossas atividades. Cada contribuição, por menor que seja, nos ajuda a alcançar mais vidas.
+            </p>
+            
+            <div class="donation-options">
+                </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> | <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', function() {
+            if(window.scrollY > 0) {
+                header.classList.add('hide-header');
+            } else {
+                header.classList.remove('hide-header');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Use a URL e a chave pública do seu projeto Supabase
+        const SUPABASE_URL = 'https://ksgmhimjuulnveszzvlj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzZ21oaW1qdXVsbnZlc3p6dmxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNTU1MjEsImV4cCI6MjA3MjgzMTUyMX0.L19M_5XA9TDHXDESI2VNxBevFqWsNrNJevS5oquYkO0';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const donationOptionsContainer = document.querySelector('.donation-options');
+
+        async function getDonationInfo() {
+            const { data: doacoes_info, error } = await supabase
+                .from('doacoes_info')
+                .select('*');
+
+            if (error) {
+                console.error('Erro ao buscar as informações de doação:', error);
+                donationOptionsContainer.innerHTML = '<p>Ocorreu um erro ao carregar as informações de doação. Por favor, tente novamente mais tarde.</p>';
+            } else {
+                donationOptionsContainer.innerHTML = '';
+                doacoes_info.forEach(info => {
+                    let cardHTML = `<div class="donation-card">`;
+                    cardHTML += `<h3>${info.titulo}</h3>`;
+                    cardHTML += `<p>${info.descricao}</p>`;
+
+                    if (info.tipo === 'PayPal') {
+                        cardHTML += `<a href="${info.detalhes.url}" class="cta-button" target="_blank">Doar com PayPal</a>`;
+                    } else if (info.tipo === 'Pix') {
+                        cardHTML += `<img src="${info.detalhes.qr_code}" alt="QR Code Pix" class="pix-qrcode">`;
+                        cardHTML += `<p>Chave Pix: <strong>${info.detalhes.chave}</strong></p>`;
+                    } else if (info.tipo === 'Transferencia') {
+                        cardHTML += `<ul>`;
+                        cardHTML += `<li><strong>Banco:</strong> ${info.detalhes.banco}</li>`;
+                        cardHTML += `<li><strong>Agência:</strong> ${info.detalhes.agencia}</li>`;
+                        cardHTML += `<li><strong>Conta:</strong> ${info.detalhes.conta}</li>`;
+                        cardHTML += `<li><strong>CNPJ:</strong> ${info.detalhes.cnpj}</li>`;
+                        cardHTML += `</ul>`;
+                    }
+                    
+                    cardHTML += `</div>`;
+                    donationOptionsContainer.innerHTML += cardHTML;
+                });
+            }
+        }
+
+        getDonationInfo();
+    </script>
+</body>
+</html>

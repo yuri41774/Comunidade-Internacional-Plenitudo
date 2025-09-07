@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Fotos - Comunidade Internacional Plenitude</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1><a href="index.html" style="color: #fff; text-decoration: none;">Comunidade Internacional Plenitude</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="index.html#sobre">Sobre Nós</a></li>
+                    <li><a href="index.html#eventos">Eventos</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="doacoes.html">Doações</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="section-padded">
+        <div class="container">
+            <h2>Nossa Galeria</h2>
+            <p class="intro-text">Momentos especiais da nossa comunidade, encontros e eventos.</p>
+            
+            <div class="photo-gallery">
+                </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> | <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', function() {
+            if(window.scrollY > 0) {
+                header.classList.add('hide-header');
+            } else {
+                header.classList.remove('hide-header');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://ksgmhimjuulnveszzvlj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzZ21oaW1qdXVsbnZlc3p6dmxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNTU1MjEsImV4cCI6MjA3MjgzMTUyMX0.L19M_5XA9TDHXDESI2VNxBevFqWsNrNJevS5oquYkO0';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const galleryContainer = document.querySelector('.photo-gallery');
+
+        async function getPhotos() {
+            const { data: photos, error } = await supabase
+                .from('galeria')
+                .select('*')
+                .order('data_evento', { ascending: false });
+
+            if (error) {
+                console.error('Erro ao buscar as fotos:', error);
+                galleryContainer.innerHTML = '<p>Erro ao carregar a galeria de fotos. Por favor, tente novamente mais tarde.</p>';
+            } else {
+                photos.forEach(photo => {
+                    const photoCard = document.createElement('div');
+                    photoCard.classList.add('photo-card');
+                    photoCard.innerHTML = `
+                        <img src="${photo.url}" alt="${photo.legenda}">
+                        <div class="photo-overlay">
+                            <p>${photo.legenda}</p>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(photoCard);
+                });
+            }
+        }
+
+        getPhotos();
+    </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidade Internacional Plenitude</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Comunidade Internacional Plenitude</h1>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#sobre">Sobre Nós</a></li>
+                    <li><a href="#eventos">Eventos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="doacoes.html">Doações</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <h2>Bem-vindo à nossa casa!</h2>
+                <p>Juntos, edificando vidas e espalhando a palavra de Deus.</p>
+                <a href="#eventos" class="cta-button">Veja nossos próximos eventos</a>
+            </div>
+        </section>
+
+        <section id="sobre" class="section-padded">
+            <div class="container">
+                <h2>Nossa História e Missão</h2>
+                <p>A Comunidade Internacional Plenitude nasceu de um desejo de criar um espaço onde as pessoas pudessem se conectar com Deus de forma autêntica e em comunidade. Acreditamos no poder da fé e na transformação que ela traz para nossas vidas. Nossa missão é amar a Deus e amar o próximo, servindo nossa comunidade e compartilhando o evangelho.</p>
+            </div>
+        </section>
+
+        <section id="eventos" class="section-padded bg-light">
+            <div class="container">
+                <h2>Eventos e Notícias</h2>
+                <div class="event-card">
+                    <h3>Culto de Celebração</h3>
+                    <p>Domingo, 10h30. Venha louvar e adorar conosco!</p>
+                </div>
+                <div class="event-card">
+                    <h3>Estudo Bíblico</h3>
+                    <p>Quarta-feira, 20h. Estudo do livro de João.</p>
+                </div>
+                <div class="event-card">
+                    <h3>Noite da Família</h3>
+                    <p>Última sexta-feira do mês, 19h30. Juntos em comunhão.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="section-padded">
+            <div class="container">
+                <h2>Entre em Contato</h2>
+                <p>Preencha o formulário abaixo para nos enviar uma mensagem. Responderemos em breve!</p>
+                <form class="contact-form">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="doacoes" class="section-padded bg-light">
+            <div class="container">
+                <h2>Faça uma Doação</h2>
+                <p>Sua contribuição nos ajuda a manter nossas atividades e a continuar nosso trabalho na comunidade. Agradecemos sua generosidade.</p>
+                <a href="doacoes.html" class="cta-button">Doar Agora</a>
+                <p>Ajuste o link do botão "Doar Agora" para a sua plataforma de doações (por exemplo, PayPal, PagSeguro, etc.).</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a> | <a href="#">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', function() {
+            if(window.scrollY > 0) {
+                header.classList.add('hide-header');
+            } else {
+                header.classList.remove('hide-header');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Use a URL e a chave pública do seu projeto Supabase aqui
+        const SUPABASE_URL = 'https://ksgmhimjuulnveszzvlj.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzZ21oaW1qdXVsbnZlc3p6dmxqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcyNTU1MjEsImV4cCI6MjA3MjgzMTUyMX0.L19M_5XA9TDHXDESI2VNxBevFqWsNrNJevS5oquYkO0';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            const { error } = await supabase
+                .from('contato')
+                .insert([{ nome, email, mensagem }]);
+
+            if (error) {
+                console.error('Erro ao enviar a mensagem:', error);
+                alert('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
+            } else {
+                alert('Mensagem enviada com sucesso! Em breve entraremos em contato.');
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
