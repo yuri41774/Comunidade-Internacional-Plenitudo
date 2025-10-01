@@ -222,9 +222,10 @@
   <!-- ========================== -->
   <script type="module">
     // Importações do Firebase v11.6.1 conforme as instruções
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { firebaseConfig } from "../firebaseConfig.js";
 
     // Constantes para o Gemini API
     const GEMINI_MODEL = "gemini-2.5-flash-preview-05-20";
@@ -384,8 +385,7 @@
 
     // Variáveis globais obrigatórias (FIREBASE)
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    // Usar __firebase_config e fallback se não estiver definida (embora deva estar)
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Configuração de fallback seria necessária aqui se a global não existisse */ };
+    // firebaseConfig importado de arquivo externo
     const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
     // Inicialização do Firebase
