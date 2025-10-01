@@ -10,32 +10,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
+    /* Estilo para garantir que o hero cubra a altura da tela, adaptável */
+    .hero-section {
+        min-height: 70vh;
+        background-image: url('https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
+  <!-- Custom Notification Message Box (Substitui alert()) -->
+  <div id="notification-box" class="fixed top-4 right-4 p-4 rounded-xl shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none z-[100] transform translate-y-0 hover:scale-105">
+    <p id="notification-message" class="font-semibold"></p>
+  </div>
+
   <!-- ========================== -->
   <!-- BARRA DE NAVEGAÇÃO -->
   <!-- ========================== -->
-  <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+  <header class="bg-orange-800 text-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
       <h1 class="text-2xl font-bold">C. I. Plenitude</h1>
+      <!-- Menu Desktop -->
       <nav class="space-x-6 hidden md:block">
-        <a href="#sobre" class="hover:text-gray-300">Sobre Nós</a>
-        <a href="#ministerios" class="hover:text-gray-300">Ministérios</a>
-        <a href="#agenda" class="hover:text-gray-300">Agenda</a>
-        <a href="#contato" class="hover:text-gray-300">Contato</a>
+        <a href="#sobre" class="hover:text-gray-300 transition duration-150">Sobre Nós</a>
+        <a href="#ministerios" class="hover:text-gray-300 transition duration-150">Ministérios</a>
+        <a href="#agenda" class="hover:text-gray-300 transition duration-150">Agenda</a>
+        <a href="#meditacao" class="hover:text-gray-300 transition duration-150">Meditação</a> <!-- NOVO LINK -->
+        <a href="#contato" class="hover:text-gray-300 transition duration-150">Contato</a>
       </nav>
+      <!-- Botão para Menu Mobile (Oculto, mas pronto para implementação) -->
+      <button class="md:hidden p-2 rounded-lg hover:bg-orange-700 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
     </div>
   </header>
 
   <!-- ========================== -->
   <!-- HERO (Banner inicial) -->
   <!-- ========================== -->
-  <section class="bg-[url('https://images.unsplash.com/photo-1508780709619-79562169bc64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center h-[70vh] flex items-center justify-center text-center text-white">
-    <div class="bg-black bg-opacity-50 p-6 rounded-xl">
-      <h2 class="text-4xl md:text-5xl font-bold">Bem-vindo à Comunidade Internacional Plenitude</h2>
-      <p class="mt-4 text-lg">Um lugar de adoração, fé e comunhão</p>
+  <section class="hero-section bg-cover bg-center flex items-center justify-center text-center text-white">
+    <div class="bg-black bg-opacity-60 backdrop-blur-sm p-8 rounded-2xl max-w-xl mx-auto m-4">
+      <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">Bem-vindo à Comunidade Internacional Plenitude</h2>
+      <p class="mt-4 text-xl md:text-2xl font-light">Um lugar de adoração, fé e comunhão</p>
     </div>
   </section>
 
@@ -43,132 +59,403 @@
   <!-- SOBRE NÓS -->
   <!-- ========================== -->
   <section id="sobre" class="max-w-5xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center mb-6">Sobre Nós</h2>
-    <p class="text-lg text-center text-gray-600">
+    <h2 class="text-4xl font-bold text-center mb-8 text-orange-800">Nossa Missão</h2>
+    <p class="text-lg text-center text-gray-600 leading-relaxed">
       A Comunidade Internacional Plenitude é uma igreja cristã dedicada a levar o amor de Deus a todas as nações. 
-      Nosso objetivo é transformar vidas através da Palavra, da adoração e da comunhão entre irmãos.
+      Nosso objetivo é **transformar vidas** através da Palavra, da adoração genuína e da comunhão profunda entre irmãos. 
+      Acreditamos no poder do Espírito Santo para restaurar e capacitar cada pessoa a viver em sua plenitude em Cristo.
     </p>
   </section>
 
+  ---
+  
   <!-- ========================== -->
   <!-- MINISTÉRIOS -->
   <!-- ========================== -->
-  <section id="ministerios" class="bg-gray-100 py-16 px-6">
+  <section id="ministerios" class="bg-orange-800 text-white py-16 px-6">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-10">Nossos Ministérios</h2>
+      <h2 class="text-4xl font-bold text-center mb-12">Nossos Ministérios</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 class="font-bold text-xl">Louvor</h3>
-          <p class="mt-2 text-gray-600">Ministério que conduz a igreja em adoração através da música.</p>
+        <div class="bg-white text-gray-800 shadow-xl rounded-xl p-8 text-center transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+          <h3 class="font-extrabold text-2xl mb-2">Louvor & Adoração</h3>
+          <p class="mt-2 text-gray-600">Ministério que conduz a igreja em adoração através da música e das artes, criando um ambiente para a presença de Deus.</p>
         </div>
-        <div class="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 class="font-bold text-xl">Infantil</h3>
-          <p class="mt-2 text-gray-600">Ensinando as crianças no caminho do Senhor com amor e dedicação.</p>
+        <div class="bg-white text-gray-800 shadow-xl rounded-xl p-8 text-center transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+          <h3 class="font-extrabold text-2xl mb-2">Ministério Infantil</h3>
+          <p class="mt-2 text-gray-600">Ensinando as crianças no caminho do Senhor com amor e dedicação, através de atividades lúdicas e bíblicas.</p>
         </div>
-        <div class="bg-white shadow-md rounded-xl p-6 text-center">
-          <h3 class="font-bold text-xl">Intercessão</h3>
-          <p class="mt-2 text-gray-600">Um time dedicado à oração e ao clamor pela igreja e pela cidade.</p>
+        <div class="bg-white text-gray-800 shadow-xl rounded-xl p-8 text-center transform hover:scale-[1.03] transition duration-300 cursor-pointer">
+          <h3 class="font-extrabold text-2xl mb-2">Intercessão Profética</h3>
+          <p class="mt-2 text-gray-600">Um time dedicado à oração e ao clamor pela igreja, pela cidade e pelas nações, com foco em ouvir a voz de Deus.</p>
         </div>
       </div>
     </div>
   </section>
+
+  ---
 
   <!-- ========================== -->
   <!-- AGENDA DE CULTOS -->
   <!-- ========================== -->
   <section id="agenda" class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center mb-10">Agenda de Cultos</h2>
+    <h2 class="text-4xl font-bold text-center mb-12 text-orange-800">Agenda Semanal</h2>
     <div class="grid md:grid-cols-2 gap-8">
-      <div class="bg-blue-900 text-white p-6 rounded-xl shadow-md">
-        <h3 class="font-bold text-xl">Culto de Celebração</h3>
-        <p class="mt-2">Domingo - 19h</p>
+      <div class="bg-orange-100 text-orange-800 p-8 rounded-xl shadow-lg border-l-4 border-orange-800">
+        <h3 class="font-extrabold text-2xl">Culto de Celebração</h3>
+        <p class="mt-3 text-lg font-medium">Domingo | 19h00</p>
+        <p class="text-gray-600 mt-1">Nosso principal encontro de adoração e Palavra.</p>
       </div>
-      <div class="bg-blue-900 text-white p-6 rounded-xl shadow-md">
-        <h3 class="font-bold text-xl">Culto de Oração</h3>
-        <p class="mt-2">Quarta-feira - 20h</p>
+      <div class="bg-orange-100 text-orange-800 p-8 rounded-xl shadow-lg border-l-4 border-orange-800">
+        <h3 class="font-extrabold text-2xl">Reunião de Oração</h3>
+        <p class="mt-3 text-lg font-medium">Quarta-feira | 20h00</p>
+        <p class="text-gray-600 mt-1">Momento dedicado à intercessão e estudo bíblico aprofundado.</p>
       </div>
     </div>
   </section>
+
+  ---
+  
+  <!-- ========================== -->
+  <!-- MEDITAÇÃO DIÁRIA (NOVO) -->
+  <!-- ========================== -->
+  <section id="meditacao" class="bg-gray-200 py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-8 text-orange-800">Inspiração Diária ✨ (Gerado por IA)</h2>
+      <p class="mb-6 text-gray-700 text-lg">
+        Clique no botão abaixo para receber uma reflexão espiritual e um versículo bíblico focado em um tema como Fé, Esperança ou Amor.
+      </p>
+
+      <button id="generateReflectionBtn" class="bg-orange-800 text-white p-4 rounded-xl font-bold text-lg hover:bg-orange-700 transition duration-300 shadow-md transform hover:scale-[1.03] active:scale-100">
+        Gerar Minha Reflexão ✨
+      </button>
+
+      <!-- Container do resultado -->
+      <div id="reflectionResult" class="mt-8 bg-white p-6 rounded-2xl shadow-xl border-t-4 border-orange-800 hidden text-left">
+        <div id="reflectionText" class="text-gray-800 text-lg mb-4"></div>
+        <div id="reflectionSources" class="text-sm text-gray-500 italic mt-4 border-t pt-2 border-gray-100"></div>
+        <div id="reflectionLoading" class="flex items-center justify-center space-x-2 hidden py-4">
+            <div class="animate-spin h-5 w-5 border-4 border-orange-800 border-t-transparent rounded-full"></div>
+            <span class="text-orange-800 font-medium">Aguarde... Buscando inspiração bíblica...</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  ---
 
   <!-- ========================== -->
   <!-- CONTATO -->
   <!-- ========================== -->
   <section id="contato" class="bg-gray-100 py-16 px-6">
     <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6">Contato</h2>
-      <p class="mb-6 text-gray-600">Entre em contato conosco para saber mais sobre nossa igreja.</p>
+      <h2 class="text-4xl font-bold mb-8 text-orange-800">Entre em Contato</h2>
+      <p class="mb-8 text-gray-600 text-lg">Envie-nos uma mensagem e teremos o prazer de retornar o contato.</p>
+      
       <!-- Formulário de contato -->
-      <form id="contactForm" class="grid gap-4">
-        <input type="text" id="name" placeholder="Seu Nome" class="p-3 rounded-lg border border-gray-300 w-full" required>
-        <input type="email" id="email" placeholder="Seu E-mail" class="p-3 rounded-lg border border-gray-300 w-full" required>
-        <textarea id="message" placeholder="Sua Mensagem" class="p-3 rounded-lg border border-gray-300 w-full h-32" required></textarea>
-        <button type="submit" class="bg-blue-900 text-white p-3 rounded-lg font-bold hover:bg-blue-800 transition">Enviar</button>
+      <form id="contactForm" class="grid gap-6 bg-white p-8 rounded-2xl shadow-xl">
+        <input type="text" id="name" placeholder="Seu Nome Completo" class="p-4 rounded-xl border-2 border-gray-200 w-full focus:ring-orange-800 focus:border-orange-800 transition duration-150" required>
+        <input type="email" id="email" placeholder="Seu Melhor E-mail" class="p-4 rounded-xl border-2 border-gray-200 w-full focus:ring-orange-800 focus:border-orange-800 transition duration-150" required>
+        <!-- CAMPO DE TELEFONE -->
+        <input type="tel" id="phone" placeholder="Telefone (DDD e 9 dígitos)" 
+               class="p-4 rounded-xl border-2 border-gray-200 w-full focus:ring-orange-800 focus:border-orange-800 transition duration-150" 
+               pattern="[0-9]{10,11}" 
+               title="O telefone deve ter 10 ou 11 dígitos (incluindo o DDD)" 
+               required>
+        <!-- NOVO CAMPO WHATSAPP -->
+        <div class="flex items-center space-x-6 p-4 rounded-xl border-2 border-gray-200 bg-white">
+          <label class="font-semibold text-gray-700">Este número é WhatsApp?</label>
+          <div class="flex items-center space-x-4">
+            <label for="whatsapp_yes" class="flex items-center cursor-pointer">
+              <input type="radio" id="whatsapp_yes" name="isWhatsApp" value="Sim" class="text-orange-800 focus:ring-orange-500 h-5 w-5 border-gray-300" required>
+              <span class="ml-2 text-gray-700">Sim</span>
+            </label>
+            <label for="whatsapp_no" class="flex items-center cursor-pointer">
+              <input type="radio" id="whatsapp_no" name="isWhatsApp" value="Não" class="text-orange-800 focus:ring-orange-500 h-5 w-5 border-gray-300">
+              <span class="ml-2 text-gray-700">Não</span>
+            </label>
+          </div>
+        </div>
+        <!-- FIM DO NOVO CAMPO WHATSAPP -->
+        <textarea id="message" placeholder="Sua Mensagem ou Pedido de Oração" class="p-4 rounded-xl border-2 border-gray-200 w-full h-36 focus:ring-orange-800 focus:border-orange-800 transition duration-150" required></textarea>
+        <button type="submit" class="bg-orange-800 text-white p-4 rounded-xl font-bold text-lg hover:bg-orange-700 transition duration-300 shadow-md">
+          <span id="submit-text">Enviar Mensagem</span>
+          <div id="loading-spinner" class="hidden animate-spin h-5 w-5 border-4 border-white border-t-transparent rounded-full mx-auto"></div>
+        </button>
       </form>
+      <!-- Mostrar userId para referência -->
+      <p class="mt-6 text-sm text-gray-400">ID de Usuário: <span id="currentUserId">Aguardando autenticação...</span></p>
     </div>
   </section>
+
+  ---
 
   <!-- ========================== -->
   <!-- RODAPÉ -->
   <!-- ========================== -->
-  <footer class="bg-blue-900 text-white text-center py-6 mt-12">
+  <footer class="bg-orange-800 text-white text-center py-8 mt-12">
     <p>&copy; 2025 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
+    <div class="mt-3 space-x-4">
+      <!-- Ícones de Mídia Social (Exemplo com placeholders) -->
+      <a href="#" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V9h3v9zm4 0h-3v-9h3v9z"/></svg></a>
+      <a href="#" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 14h-3v5h-2v-5H7v-2h5V7h2v7h3v2z"/></svg></a>
+    </div>
   </footer>
 
   <!-- ========================== -->
-  <!-- FIREBASE INTEGRAÇÃO -->
+  <!-- FIREBASE & GEMINI INTEGRAÇÃO -->
   <!-- ========================== -->
   <script type="module">
-    // Importações Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+    // Importações do Firebase v11.6.1 conforme as instruções
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Configuração do Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyAxuEEDjn6lPfKOysOcQjvWvUWqJL_990o",
-      authDomain: "c-i-plenitude.firebaseapp.com",
-      projectId: "c-i-plenitude",
-      storageBucket: "c-i-plenitude.firebasestorage.app",
-      messagingSenderId: "126733729315",
-      appId: "1:126733729315:web:9f247cd8f854fb2e0fbb96",
-      measurementId: "G-CGG5MZB9P1"
-    };
+    // Constantes para o Gemini API
+    const GEMINI_MODEL = "gemini-2.5-flash-preview-05-20";
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+    const API_KEY = ""; // Será preenchida pelo ambiente de execução
 
-    // Inicializa Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    // Elementos da UI para a Reflexão
+    const reflectionResultContainer = document.getElementById('reflectionResult');
+    const reflectionTextElement = document.getElementById('reflectionText');
+    const reflectionSourcesElement = document.getElementById('reflectionSources');
+    const reflectionLoadingElement = document.getElementById('reflectionLoading');
+    const generateReflectionBtn = document.getElementById('generateReflectionBtn');
+    
+    // Função para mostrar notificação customizada (Substitui alert())
+    function showNotification(message, type = 'success') {
+      const box = document.getElementById('notification-box');
+      const msg = document.getElementById('notification-message');
+      
+      // Reset classes
+      box.className = 'fixed top-4 right-4 p-4 rounded-xl shadow-2xl transition-opacity duration-300 z-[100] transform translate-y-0 hover:scale-105';
+      
+      msg.textContent = message;
 
-    // Inicializa Firestore
-    const db = getFirestore(app);
+      if (type === 'success') {
+          box.classList.add('bg-green-100', 'text-green-800');
+      } else if (type === 'error') {
+          box.classList.add('bg-red-100', 'text-red-800');
+      }
 
-    // Captura o formulário
-    const form = document.getElementById("contactForm");
+      // Show
+      box.classList.remove('opacity-0', 'pointer-events-none');
+      box.classList.add('opacity-100');
 
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      // Hide after 4 seconds
+      setTimeout(() => {
+          box.classList.remove('opacity-100');
+          box.classList.add('opacity-0', 'pointer-events-none');
+      }, 4000);
+    }
 
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const message = document.getElementById("message").value;
+    // Função utilitária com backoff exponencial para chamadas à API Gemini
+    async function callGeminiApi(payload, maxRetries = 5) {
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    // Extrai texto e fontes
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const text = candidate.content.parts[0].text;
+                        let sources = [];
+                        const groundingMetadata = candidate.groundingMetadata;
+                        if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                            sources = groundingMetadata.groundingAttributions
+                                .map(attr => ({
+                                    uri: attr.web?.uri,
+                                    title: attr.web?.title,
+                                }))
+                                .filter(source => source.uri && source.title);
+                        }
+                        return { text, sources };
+                    }
+                    throw new Error("Resposta da API Gemini vazia ou inválida.");
+                } else if (response.status === 429) {
+                    // Too Many Requests - Implementar backoff
+                    if (attempt < maxRetries - 1) {
+                        const delay = Math.pow(2, attempt) * 1000 + Math.random() * 1000;
+                        console.warn(`[Gemini] Limite de taxa excedido. Tentando novamente em ${Math.round(delay / 1000)}s...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    } else {
+                        throw new Error(`[Gemini] Falha após ${maxRetries} tentativas devido a limite de taxa (429).`);
+                    }
+                } else {
+                    const errorBody = await response.text();
+                    throw new Error(`[Gemini] Erro na API (${response.status}): ${errorBody}`);
+                }
+            } catch (error) {
+                if (attempt < maxRetries - 1 && error.message.includes('Failed to fetch')) {
+                    const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
+                    console.warn(`[Gemini] Erro de rede. Tentando novamente em ${Math.round(delay / 1000)}s...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    continue;
+                }
+                throw error;
+            }
+        }
+        throw new Error("[Gemini] Erro desconhecido ao chamar a API Gemini.");
+    }
+    
+    // Função principal para gerar reflexão
+    async function generateReflection() {
+        // Seleciona um tema aleatório para manter a reflexão fresca
+        const themes = ["Fé inabalável", "Esperança em tempos de crise", "O amor que tudo transforma", "Perdão e Graça", "Caminhando em Santidade"];
+        const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+
+        const systemPrompt = "Você é um conselheiro espiritual e ministro da Palavra. Gere uma reflexão concisa e inspiradora em Português (Portugal) sobre o tema dado. A reflexão deve ter no máximo 4 frases e DEVE incluir pelo menos uma citação de um versículo bíblico relevante, formatado como (Livro Capítulo:Versículo).";
+        
+        const userQuery = `Gere uma reflexão sobre o tema: ${randomTheme}.`;
+
+        const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            tools: [{ "google_search": {} }], // Usar Search Grounding para garantir referências bíblicas
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            },
+        };
+
+        // UI: Mostrar loading
+        reflectionResultContainer.classList.remove('hidden');
+        reflectionTextElement.innerHTML = '';
+        reflectionSourcesElement.innerHTML = '';
+        reflectionLoadingElement.classList.remove('hidden');
+        generateReflectionBtn.disabled = true;
 
         try {
-          // Salva no Firestore (coleção "mensagens")
-          await addDoc(collection(db, "mensagens"), {
-            nome: name,
-            email: email,
-            mensagem: message,
-            data: new Date()
-          });
+            const { text, sources } = await callGeminiApi(payload);
 
-          alert("Mensagem enviada com sucesso!");
-          form.reset();
+            // UI: Esconder loading
+            reflectionLoadingElement.classList.add('hidden');
+
+            // Formatando e exibindo o texto
+            reflectionTextElement.innerHTML = text.replace(/\n/g, '<br>');
+            
+            // Formatando e exibindo as fontes/citações
+            if (sources.length > 0) {
+                const sourceList = sources.map(s => 
+                    `<a href="${s.uri}" target="_blank" class="text-orange-800 hover:underline transition duration-150">${s.title || s.uri}</a>`
+                ).join(' | ');
+                reflectionSourcesElement.innerHTML = `**Fontes de Pesquisa:** ${sourceList}`;
+            } else {
+                reflectionSourcesElement.innerHTML = `*Conteúdo gerado por IA. Verifique as escrituras.*`;
+            }
+
         } catch (error) {
-          console.error("Erro ao enviar mensagem: ", error);
-          alert("Erro ao enviar. Tente novamente.");
+            console.error("Erro ao gerar reflexão:", error);
+            reflectionLoadingElement.classList.add('hidden');
+            reflectionTextElement.innerHTML = `<p class="text-red-600">Desculpe, não foi possível gerar a reflexão neste momento. Por favor, tente novamente mais tarde.</p>`;
+            reflectionSourcesElement.innerHTML = '';
+        } finally {
+            generateReflectionBtn.disabled = false;
         }
-      });
     }
+    
+    // Anexa o listener ao botão de geração
+    if (generateReflectionBtn) {
+        generateReflectionBtn.addEventListener('click', generateReflection);
+    }
+    
+
+    // Variáveis globais obrigatórias (FIREBASE)
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    // Usar __firebase_config e fallback se não estiver definida (embora deva estar)
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Configuração de fallback seria necessária aqui se a global não existisse */ };
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+    // Inicialização do Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    
+    // Configuração de log
+    setLogLevel('Debug');
+
+    let userId = null; 
+
+    // Função de autenticação obrigatória
+    async function initializeAuth() {
+        try {
+            if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+            } else {
+                // Autenticação anónima se o token não estiver disponível
+                await signInAnonymously(auth);
+            }
+            // Define o userId com o UID autenticado ou um UUID aleatório se for anónimo
+            userId = auth.currentUser?.uid || crypto.randomUUID();
+            document.getElementById('currentUserId').textContent = userId;
+            console.log("Firebase inicializado. User ID:", userId);
+        } catch (error) {
+            console.error("Firebase Auth Error:", error);
+            showNotification("Falha na autenticação. As mensagens não serão salvas.", 'error');
+        }
+    }
+
+    initializeAuth();
+
+    // Listener de submissão do formulário de Contato
+    document.getElementById("contactForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const submitButton = event.submitter;
+      const submitText = document.getElementById('submit-text');
+      const loadingSpinner = document.getElementById('loading-spinner');
+
+      // Verifica se o userId foi carregado
+      if (!userId) {
+          showNotification("Aguardando inicialização da autenticação. Tente novamente em segundos.", 'error');
+          return;
+      }
+      
+      // Coleta de dados
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value; 
+      // NOVO: Coleta o valor do WhatsApp
+      const isWhatsApp = document.querySelector('input[name="isWhatsApp"]:checked')?.value || 'Não informado';
+      const message = document.getElementById("message").value;
+
+      // Habilitar estado de carregamento
+      submitButton.disabled = true;
+      submitText.classList.add('hidden');
+      loadingSpinner.classList.remove('hidden');
+
+      try {
+        // Caminho obrigatório para dados privados: /artifacts/{appId}/users/{userId}/messages
+        const collectionPath = `artifacts/${appId}/users/${userId}/messages`;
+
+        await addDoc(collection(db, collectionPath), {
+          name: name,
+          email: email,
+          phone: phone,
+          isWhatsApp: isWhatsApp, // Adiciona o status do WhatsApp
+          message: message,
+          timestamp: new Date()
+        });
+
+        showNotification("Mensagem enviada com sucesso! Em breve entraremos em contato.", 'success');
+        document.getElementById("contactForm").reset();
+
+      } catch (error) {
+        console.error("Erro ao enviar mensagem: ", error);
+        showNotification("Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente.", 'error');
+      } finally {
+        // Desabilitar estado de carregamento
+        submitButton.disabled = false;
+        submitText.classList.remove('hidden');
+        loadingSpinner.classList.add('hidden');
+      }
+    });
   </script>
 
 </body>
