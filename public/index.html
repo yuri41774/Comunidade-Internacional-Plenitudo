@@ -64,6 +64,29 @@
       <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">Bem-vindo à Comunidade Internacional Plenitude</h2>
       <p class="mt-4 text-xl md:text-2xl font-light">Um lugar de adoração, fé e comunhão</p>
     </div>
+    <script type="module">
+      import { initializeApp as initializeAppBanner } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getFirestore as getFirestoreBanner, doc as docBanner, getDoc as getDocBanner } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+      const firebaseConfigBanner = {
+        apiKey: "AIzaSyAxuEEDjn6lPfKOysOcQjvWvUWqJL_990o",
+        authDomain: "c-i-plenitude.firebaseapp.com",
+        projectId: "c-i-plenitude",
+        storageBucket: "c-i-plenitude.appspot.com",
+        messagingSenderId: "126733729315",
+        appId: "1:126733729315:web:9f247cd8f854fb2e0fbb96",
+        measurementId: "G-CGG5MZB9P1"
+      };
+      const appBanner = initializeAppBanner(firebaseConfigBanner);
+      const dbBanner = getFirestoreBanner(appBanner);
+      async function carregarBanner() {
+        const bannerDoc = await getDocBanner(docBanner(dbBanner, 'config', 'banner'));
+        if (bannerDoc.exists()) {
+          const url = bannerDoc.data().url;
+          document.querySelector('.hero-section').style.backgroundImage = `url('${url}')`;
+        }
+      }
+      carregarBanner();
+    </script>
   </section>
 
   <!-- ========================== -->
@@ -211,10 +234,37 @@
   <!-- ========================== -->
   <footer class="bg-orange-800 text-white text-center py-8 mt-12" role="contentinfo" aria-label="Rodapé">
     <p>&copy; 2025 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
-    <div class="mt-3 space-x-4">
-      <!-- Ícones de Mídia Social (Exemplo com placeholders) -->
-      <a href="#" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V9h3v9zm4 0h-3v-9h3v9z"/></svg></a>
-      <a href="#" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 14h-3v5h-2v-5H7v-2h5V7h2v7h3v2z"/></svg></a>
+    <div class="mt-3 space-x-4" id="midiasLinks">
+      <!-- Ícones de Mídia Social serão inseridos via JS -->
+    </div>
+  <!-- POLÍTICA DE PRIVACIDADE -->
+  <div class="max-w-4xl mx-auto text-center py-8">
+    <h2 class="text-2xl font-bold mb-4 text-orange-800">Política de Privacidade</h2>
+    <div id="privacidadeTextoSite" class="text-gray-600 text-lg"></div>
+  </div>
+  import { getDoc, doc as docConfig } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  // Mídias sociais dinâmicas
+  async function carregarMidias() {
+    const midiasDoc = await getDoc(docConfig(db, 'config', 'midias'));
+    const midiasLinks = document.getElementById('midiasLinks');
+    midiasLinks.innerHTML = '';
+    if (midiasDoc.exists()) {
+      const { facebook, instagram, youtube } = midiasDoc.data();
+      if (facebook) midiasLinks.innerHTML += `<a href="${facebook}" target="_blank" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16H8V9h3v9zm4 0h-3v-9h3v9z"/></svg></a>`;
+      if (instagram) midiasLinks.innerHTML += `<a href="${instagram}" target="_blank" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 14h-3v5h-2v-5H7v-2h5V7h2v7h3v2z"/></svg></a>`;
+      if (youtube) midiasLinks.innerHTML += `<a href="${youtube}" target="_blank" class="text-white hover:text-gray-300 transition duration-150"><svg class="w-6 h-6 inline-block" fill="currentColor" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6zm9-6.5v9c0 .83-.67 1.5-1.5 1.5h-13c-.83 0-1.5-.67-1.5-1.5v-9c0-.83.67-1.5 1.5-1.5h13c.83 0 1.5.67 1.5 1.5z"/></svg></a>`;
+    }
+  }
+  carregarMidias();
+
+  // Política de privacidade dinâmica
+  async function carregarPrivacidade() {
+    const privacidadeDoc = await getDoc(docConfig(db, 'config', 'privacidade'));
+    if (privacidadeDoc.exists()) {
+      document.getElementById('privacidadeTextoSite').textContent = privacidadeDoc.data().texto;
+    }
+  }
+  carregarPrivacidade();
     </div>
   </footer>
 
