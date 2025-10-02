@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comunidade Internacional Plenitude</title>
-  <!-- SEO e Favicon -->
+  <!-- Bloco de SEO e Favicon: Metadados para busca, redes sociais e ícone do site -->
   <meta name="description" content="Comunidade Internacional Plenitude - Igreja cristã dedicada à adoração, fé e comunhão.">
   <meta name="keywords" content="igreja, cristã, plenitude, fé, esperança, amor, oração, comunidade">
   <meta name="author" content="Comunidade Internacional Plenitude">
@@ -14,11 +14,12 @@
   <meta property="og:url" content="https://c-i-plenitude.web.app">
   <meta property="og:image" content="/favicon.png">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <!-- Importando Tailwind CSS gerado localmente -->
+  <!-- Bloco de importação do Tailwind CSS para estilização -->
   <link href="/tailwind.output.css" rel="stylesheet">
-  <!-- Fonte personalizada -->
+  <!-- Bloco de importação de fonte personalizada (Google Fonts) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Bloco de estilos customizados para o layout principal */
     body { font-family: 'Inter', sans-serif; }
     /* Estilo para garantir que o hero cubra a altura da tela, adaptável */
     .hero-section {
@@ -29,13 +30,13 @@
 </head>
 <body class="bg-gray-50 text-gray-800" tabindex="0">
 
-  <!-- Custom Notification Message Box (Substitui alert()) -->
+  <!-- Bloco de notificação customizada (substitui alert) -->
   <div id="notification-box" class="fixed top-4 right-4 p-4 rounded-xl shadow-2xl transition-opacity duration-300 opacity-0 pointer-events-none z-[100] transform translate-y-0 hover:scale-105">
     <p id="notification-message" class="font-semibold"></p>
   </div>
 
   <!-- ========================== -->
-  <!-- BARRA DE NAVEGAÇÃO -->
+  <!-- Bloco da barra de navegação principal do site -->
   <!-- ========================== -->
   <header class="bg-orange-800 text-white shadow-md sticky top-0 z-50" role="banner" aria-label="Cabeçalho principal">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
@@ -57,7 +58,7 @@
   </header>
 
   <!-- ========================== -->
-  <!-- HERO (Banner inicial) -->
+  <!-- Bloco do banner inicial (hero) dinâmico -->
   <!-- ========================== -->
   <section class="hero-section bg-cover bg-center flex items-center justify-center text-center text-white" role="region" aria-label="Banner inicial">
     <div class="bg-black bg-opacity-60 backdrop-blur-sm p-8 rounded-2xl max-w-xl mx-auto m-4">
@@ -90,7 +91,7 @@
   </section>
 
   <!-- ========================== -->
-  <!-- SOBRE NÓS -->
+  <!-- Bloco 'Sobre Nós': missão e visão da igreja -->
   <!-- ========================== -->
   <section id="sobre" class="max-w-5xl mx-auto px-6 py-16" role="region" aria-label="Sobre nós">
     <h2 class="text-4xl font-bold text-center mb-8 text-orange-800">Nossa Missão</h2>
@@ -104,7 +105,7 @@
   ---
   
   <!-- ========================== -->
-  <!-- MINISTÉRIOS -->
+  <!-- Bloco de ministérios: lista dos principais ministérios da igreja -->
   <!-- ========================== -->
   <section id="ministerios" class="bg-orange-800 text-white py-16 px-6" role="region" aria-label="Ministérios">
     <div class="max-w-6xl mx-auto">
@@ -129,7 +130,7 @@
   ---
 
   <!-- ========================== -->
-  <!-- AGENDA DE CULTOS -->
+  <!-- Bloco de agenda de cultos: horários e tipos de reuniões -->
   <!-- ========================== -->
   <section id="agenda" class="max-w-6xl mx-auto px-6 py-16" role="region" aria-label="Agenda semanal">
     <h2 class="text-4xl font-bold text-center mb-12 text-orange-800">Agenda Semanal</h2>
@@ -150,7 +151,7 @@
   ---
   
   <!-- ========================== -->
-  <!-- MEDITAÇÃO DIÁRIA (NOVO) -->
+  <!-- Bloco de meditação diária: reflexão gerada por IA -->
   <!-- ========================== -->
   <section id="meditacao" class="bg-gray-200 py-16 px-6" role="region" aria-label="Meditação diária">
     <div class="max-w-4xl mx-auto text-center">
@@ -178,7 +179,7 @@
   ---
 
   <!-- ========================== -->
-  <!-- CONTATO -->
+  <!-- Bloco de contato: formulário para envio de mensagens -->
   <!-- ========================== -->
   <section id="contato" class="bg-gray-100 py-16 px-6" role="form" aria-label="Formulário de contato">
     <div class="max-w-4xl mx-auto text-center">
@@ -230,10 +231,10 @@
   ---
 
   <!-- ========================== -->
-  <!-- RODAPÉ -->
+  <!-- Bloco do rodapé: informações legais, mídias sociais e política de privacidade -->
   <!-- ========================== -->
   <footer class="bg-orange-800 text-white text-center py-8 mt-12" role="contentinfo" aria-label="Rodapé">
-    <p>&copy; 2025 Comunidade Internacional Plenitude. Todos os direitos reservados.</p>
+  <p>&copy; 2025 Comunidade Internacional Plenitude. Todos os direitos reservados. <span class="block text-xs mt-2">Versão 1.0.0</span></p>
     <div class="mt-3 space-x-4" id="midiasLinks">
       <!-- Ícones de Mídia Social serão inseridos via JS -->
     </div>
@@ -242,7 +243,31 @@
     <h2 class="text-2xl font-bold mb-4 text-orange-800">Política de Privacidade</h2>
     <div id="privacidadeTextoSite" class="text-gray-600 text-lg"></div>
   </div>
-  import { getDoc, doc as docConfig } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    </div>
+  </footer>
+
+  <!-- ========================== -->
+  <!-- Bloco de integração com Firebase e Gemini (IA) -->
+  <!-- ========================== -->
+  <script type="module">
+    // Importações do Firebase v11.6.1 conforme as instruções
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, setLogLevel, getDoc, doc as docConfig } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+  // Configuração do Firebase diretamente no index.html
+  const firebaseConfig = {
+    apiKey: "AIzaSyAxuEEDjn6lPfKOysOcQjvWvUWqJL_990o",
+    authDomain: "c-i-plenitude.firebaseapp.com",
+    projectId: "c-i-plenitude",
+    storageBucket: "c-i-plenitude.appspot.com",
+    messagingSenderId: "126733729315",
+    appId: "1:126733729315:web:9f247cd8f854fb2e0fbb96",
+    measurementId: "G-CGG5MZB9P1"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
   // Mídias sociais dinâmicas
   async function carregarMidias() {
     const midiasDoc = await getDoc(docConfig(db, 'config', 'midias'));
@@ -265,28 +290,6 @@
     }
   }
   carregarPrivacidade();
-    </div>
-  </footer>
-
-  <!-- ========================== -->
-  <!-- FIREBASE & GEMINI INTEGRAÇÃO -->
-  <!-- ========================== -->
-  <script type="module">
-    // Importações do Firebase v11.6.1 conforme as instruções
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-  // Configuração do Firebase diretamente no index.html
-  const firebaseConfig = {
-    apiKey: "AIzaSyAxuEEDjn6lPfKOysOcQjvWvUWqJL_990o",
-    authDomain: "c-i-plenitude.firebaseapp.com",
-    projectId: "c-i-plenitude",
-    storageBucket: "c-i-plenitude.appspot.com",
-    messagingSenderId: "126733729315",
-    appId: "1:126733729315:web:9f247cd8f854fb2e0fbb96",
-    measurementId: "G-CGG5MZB9P1"
-  };
 
     // Constantes para o Gemini API
     const GEMINI_MODEL = "gemini-2.5-flash-preview-05-20";
@@ -450,8 +453,7 @@
     const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
     // Inicialização do Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+  // app e db já foram inicializados acima
     const auth = getAuth(app);
     
     // Configuração de log
