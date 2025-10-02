@@ -12,7 +12,19 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-  <header class="bg-orange-800 text-white shadow-md sticky top-0 z-50">
+  <div id="loginContainer" class="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800" style="display:none;">
+    <div class="bg-white rounded-xl shadow-xl p-8 w-full max-w-md">
+      <h2 class="text-2xl font-bold text-orange-800 mb-4 text-center">Login do Administrador</h2>
+      <form id="loginForm" class="space-y-4">
+        <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg" placeholder="E-mail" required />
+        <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg" placeholder="Senha" required />
+        <button type="submit" class="w-full bg-orange-800 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-orange-700 transition duration-150">Entrar</button>
+        <p id="loginError" class="text-red-600 text-center mt-2"></p>
+      </form>
+    </div>
+  </div>
+  <div id="adminPanel" style="display:none;">
+    <header class="bg-orange-800 text-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
       <h1 class="text-2xl font-bold">Administração - C.I. Plenitude</h1>
       <nav class="space-x-6 hidden md:block">
@@ -85,8 +97,9 @@
   </footer>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAxuEEDjn6lPfKOysOcQjvWvUWqJL_990o",
@@ -100,7 +113,33 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
+    // Exibe painel admin apenas se autenticado
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        carregarMensagens();
+        contarUsuarios();
+      } else {
+        document.getElementById('loginContainer').style.display = 'flex';
+        document.getElementById('adminPanel').style.display = 'none';
+      }
+    });
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        document.getElementById('loginError').textContent = '';
+      } catch (error) {
+        document.getElementById('loginError').textContent = 'E-mail ou senha inválidos.';
+      }
+    });
     async function carregarMensagens() {
       const mensagensRef = collection(db, 'mensagens');
       const mensagensSnapshot = await getDocs(query(mensagensRef, orderBy('timestamp', 'desc')));
@@ -140,8 +179,7 @@
       document.getElementById('usuariosAtivos').textContent = userIds.size;
     }
 
-    carregarMensagens();
-    contarUsuarios();
+  // Removido: só carrega após login
   </script>
 </body>
 </html>
