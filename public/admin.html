@@ -37,6 +37,12 @@
         </nav>
       </div>
     </header>
+      <header class="bg-orange-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-3xl mx-auto flex justify-between items-center px-6 py-4">
+          <h1 class="text-2xl font-bold">Administração - C.I. Plenitude</h1>
+          <button id="logoutBtn" class="bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-red-700 transition duration-150">Sair</button>
+        </div>
+      </header>
 
     <main class="max-w-6xl mx-auto px-6 py-12">
       <h2 class="text-2xl font-bold mb-6" id="dashboard">Dashboard</h2>
@@ -56,6 +62,17 @@
       </div>
       <canvas id="graficoMensagens" width="400" height="200"></canvas>
     </main>
+      <main class="max-w-3xl mx-auto px-6 py-12">
+        <h2 class="text-2xl font-bold mb-6" id="dashboard">Dashboard</h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-8">
+          <h3 class="text-lg font-semibold mb-2">Mensagens</h3>
+          <p>Total: <span id="totalMensagens" class="font-bold text-orange-800">0</span></p>
+          <p>Última: <span id="ultimaMensagem" class="text-sm text-gray-600">--</span></p>
+        </div>
+        <div class="bg-white shadow rounded-lg p-6">
+          <canvas id="graficoMensagens" width="400" height="200"></canvas>
+        </div>
+      </main>
   </div>
 
   <!-- SCRIPT -->
